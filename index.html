@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Bug Detector</title>
+</head>
+<body>
+    <h1>AI Bug Detector</h1>
+    <textarea id="codeInput" rows="10" cols="50">print("Hello world")</textarea><br>
+    <button onclick="checkCode()">Check for Bugs</button>
+    <h2>Response:</h2>
+    <pre id="responseBox"></pre>
+
+    <script>
+        async function checkCode() {
+            const code = document.getElementById('codeInput').value;
+            const responseBox = document.getElementById('responseBox');
+
+            const response = await fetch('http://127.0.0.1:8000/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code: code })
+            });
+
+            const result = await response.json();
+            responseBox.textContent = JSON.stringify(result, null, 2);
+        }
+    </script>
+</body>
+</html>
